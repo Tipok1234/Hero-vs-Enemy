@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7dbdc381ab8410e8f75d8283b3d844, type: 3}
+  m_Name: Enemy_Rogue
+  m_EditorClassIdentifier: 
+  maxHealth: 65
+  moveSpeed: 3.7
+  rotationSpeed: 14
+  gravity: -20
+  animationDampTime: 0.1
+  attackDamage: 14
+  attacksPerSecond: 1.25
+  modelPrefab: {fileID: 919132149155446097, guid: 11dc293ee9c2c45d09352d6edbbe2c87, type: 3}
+  detectionRange: 150
+  attackRange: 1.5
+  stoppingDistance: 1.2
+  attackHitDelay: 0.35

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04db0a6a79c4de7bbec6645ea4c4ea1, type: 3}
+  m_Name: EnemySpawnerConfig
+  m_EditorClassIdentifier: 
+  enemies:
+  - prefab: {fileID: 4323084525071652883, guid: d19c9ef3b3942493387b4f43e0140b26, type: 3}
+    config: {fileID: 11400000, guid: 8beaf3af243a543889ed7f61063ae2eb, type: 2}
+    poolSize: 5
+  - prefab: {fileID: 4748580554713833753, guid: 28507f058727341998c84824e1c46d77, type: 3}
+    config: {fileID: 11400000, guid: 9aff1a2f5febb4657a6d653d75cc77e9, type: 2}
+    poolSize: 5
+  - prefab: {fileID: 3371059528101118020, guid: 8ebe820e90b1d4d8aac7a7457f87239f, type: 3}
+    config: {fileID: 11400000, guid: b6491dc0a474344d4a0138402ad8fd58, type: 2}
+    poolSize: 5
+  - prefab: {fileID: 2407747582325240207, guid: b1a27727a5ce04c2a935b84c35167a37, type: 3}
+    config: {fileID: 11400000, guid: 937b2344c9c2f43efaa557637e17a094, type: 2}
+    poolSize: 5
+  - prefab: {fileID: 1342647419322357314, guid: 0ab06719df53446b7aaffa7da93bd975, type: 3}
+    config: {fileID: 11400000, guid: bfbd03d763b014e6f833793942f4898d, type: 2}
+    poolSize: 5
+  minimumActiveEnemies: 5
+  populationCheckInterval: 0.25
+  minimumSpawnDistance: 5
+  maximumSpawnDistance: 40
+  spawnPositionAttempts: 12
+  spawnClearanceRadius: 0.6

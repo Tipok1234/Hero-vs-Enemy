@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86ce52cae09649e88b4a267cc18d4ce1, type: 3}
+  m_Name: DifficultyConfig
+  m_EditorClassIdentifier: 
+  waveDuration: 30
+  baseEnemyCount: 5
+  enemiesPerWave: 1
+  maximumEnemyCount: 12
+  healthIncreasePerWave: 0.1
+  speedIncreasePerWave: 0.05
+  damageIncreasePerWave: 0.1
+  maximumHealthMultiplier: 2.5
+  maximumSpeedMultiplier: 1.6
+  maximumDamageMultiplier: 2.5

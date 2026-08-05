@@ -1,0 +1,7 @@
+Mountain Arena LowPoly
+Author: PettraPan
+Source: https://sketchfab.com/3d-models/mountain-arena-lowpoly-6183552cdff243caaeb244d4f6b52c4a
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License URL: https://creativecommons.org/licenses/by/4.0/
+
+The arena model is used as the terrain base for Hero vs Enemy.

@@ -86,7 +86,6 @@ public sealed class PlayerAttack : MonoBehaviour
         pendingShotTarget = target;
         pendingShotTime = Time.time + config.ProjectileSpawnDelay;
         hasPendingShot = true;
-        Debug.Log($"[ArrowDebug] Shot scheduled. target={target.name}, delay={config.ProjectileSpawnDelay:F2}, player={transform.position}", this);
 
         if (weaponPoseRoutine != null) StopCoroutine(weaponPoseRoutine);
         weaponPoseRoutine = StartCoroutine(AnimateWeaponPose());
@@ -122,7 +121,6 @@ public sealed class PlayerAttack : MonoBehaviour
         if (shotDirection.sqrMagnitude < 0.0001f) return;
 
         var arrow = arrowsPool.Get();
-        Debug.Log($"[ArrowDebug] Launch requested. arrow={arrow.GetInstanceID()}, spawn={projectileSpawnPoint.position}, target={targetPosition}, speed={config.ProjectileSpeed:F2}", this);
         arrow.Launch(
             projectileSpawnPoint.position,
             shotDirection.normalized,
@@ -139,7 +137,6 @@ public sealed class PlayerAttack : MonoBehaviour
         hasPendingShot = false;
         var target = pendingShotTarget;
         pendingShotTarget = null;
-        Debug.Log($"[ArrowDebug] Pending shot ready. target={(target != null ? target.name : "NULL")}", this);
         FireProjectile(target);
     }
 

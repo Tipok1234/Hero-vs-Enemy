@@ -57,7 +57,6 @@ public sealed class ArrowBullet : MonoBehaviour
         launched = true;
 
         projectileRigidbody.velocity = normalizedDirection * speed;
-        Debug.Log($"[ArrowDebug] Arrow launched. id={GetInstanceID()}, position={transform.position}, velocity={projectileRigidbody.velocity}, owner={owner.name}", this);
     }
 
     private void FixedUpdate()
@@ -105,7 +104,6 @@ public sealed class ArrowBullet : MonoBehaviour
         foreach (var behaviour in behaviours)
         {
             if (!(behaviour is IDamageable damageable)) continue;
-            Debug.Log($"[ArrowDebug] Damage hit. id={GetInstanceID()}, source={hitSource}, collider={other.name}, position={transform.position}, damage={damage:F1}", this);
             damageable.TakeDamage(damage);
             Release("damage hit");
             return true;
@@ -117,7 +115,6 @@ public sealed class ArrowBullet : MonoBehaviour
     private void Release(string reason)
     {
         if (!launched) return;
-        Debug.Log($"[ArrowDebug] Arrow released. id={GetInstanceID()}, reason={reason}, position={transform.position}", this);
         launched = false;
         owner = null;
         projectileRigidbody.velocity = Vector3.zero;

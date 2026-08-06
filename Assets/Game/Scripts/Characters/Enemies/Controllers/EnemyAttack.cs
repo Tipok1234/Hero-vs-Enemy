@@ -59,7 +59,8 @@ public sealed class EnemyAttack : MonoBehaviour
     private void TryAttack()
     {
         var attackVariant = Random.Range(0, 3);
-        if (characterAnimator == null || !characterAnimator.PlayAttack(attackVariant)) return;
+        if (characterAnimator != null)
+            characterAnimator.PlayAttack(attackVariant);
 
         nextAttackTime = Time.time + config.AttackInterval;
         attackRoutine = StartCoroutine(AttackRoutine());

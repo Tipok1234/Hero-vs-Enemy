@@ -18,6 +18,9 @@ public sealed class PlayerAttack : MonoBehaviour
     private Coroutine weaponPoseRoutine;
     private EnemyHealth currentTarget;
     private CharacterMotor characterMotor;
+    private EnemyHealth pendingShotTarget;
+    private float pendingShotTime;
+    private bool hasPendingShot;
 
     public EnemyHealth CurrentTarget => currentTarget;
 
@@ -42,6 +45,8 @@ public sealed class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        FirePendingShotIfReady();
+
         if (autoAttack)
         {
             RefreshTargetIfNeeded();
@@ -74,11 +79,14 @@ public sealed class PlayerAttack : MonoBehaviour
         if (IsMoving()) return false;
         if (!IsTargetAvailable(target)) return false;
         if (Time.time < nextAttackTime) return false;
-        if (characterAnimator == null || !characterAnimator.IsReady) return false;
-
         nextAttackTime = Time.time + config.AttackInterval;
-        if (!characterAnimator.PlayAttack()) return false;
-        StartCoroutine(FireProjectileAfterDelay(target));
+        if (characterAnimator != null)
+            characterAnimator.PlayAttack();
+
+        pendingShotTarget = target;
+        pendingShotTime = Time.time + config.ProjectileSpawnDelay;
+        hasPendingShot = true;
+        Debug.Log($"[ArrowDebug] Shot scheduled. target={target.name}, delay={config.ProjectileSpawnDelay:F2}, player={transform.position}", this);
 
         if (weaponPoseRoutine != null) StopCoroutine(weaponPoseRoutine);
         weaponPoseRoutine = StartCoroutine(AnimateWeaponPose());
@@ -91,17 +99,11 @@ public sealed class PlayerAttack : MonoBehaviour
                (characterMotor.IsMoving || !characterMotor.IsGrounded);
     }
 
-    private IEnumerator FireProjectileAfterDelay(EnemyHealth target)
-    {
-        if (config.ProjectileSpawnDelay > 0f)
-            yield return new WaitForSeconds(config.ProjectileSpawnDelay);
-
-        if (IsMoving()) yield break;
-        FireProjectile(target);
-    }
-
     private void FireProjectile(EnemyHealth target)
     {
+        if (arrowsPool == null)
+            arrowsPool = FindObjectOfType<ArrowsPool>();
+
         if (arrowsPool == null || projectileSpawnPoint == null)
         {
             Debug.LogWarning("PlayerAttack cannot fire: arrows pool or spawn point is missing.", this);
@@ -120,15 +122,25 @@ public sealed class PlayerAttack : MonoBehaviour
         if (shotDirection.sqrMagnitude < 0.0001f) return;
 
         var arrow = arrowsPool.Get();
-        arrow.transform.SetPositionAndRotation(
-            projectileSpawnPoint.position,
-            Quaternion.LookRotation(shotDirection.normalized, Vector3.up));
+        Debug.Log($"[ArrowDebug] Launch requested. arrow={arrow.GetInstanceID()}, spawn={projectileSpawnPoint.position}, target={targetPosition}, speed={config.ProjectileSpeed:F2}", this);
         arrow.Launch(
+            projectileSpawnPoint.position,
             shotDirection.normalized,
             config.ProjectileSpeed,
             config.AttackRange,
             config.AttackDamage,
-            transform.root);
+            transform);
+    }
+
+    private void FirePendingShotIfReady()
+    {
+        if (!hasPendingShot || Time.time < pendingShotTime) return;
+
+        hasPendingShot = false;
+        var target = pendingShotTarget;
+        pendingShotTarget = null;
+        Debug.Log($"[ArrowDebug] Pending shot ready. target={(target != null ? target.name : "NULL")}", this);
+        FireProjectile(target);
     }
 
     private void RefreshTargetIfNeeded()
@@ -243,6 +255,8 @@ public sealed class PlayerAttack : MonoBehaviour
         StopAllCoroutines();
         weaponPoseRoutine = null;
         currentTarget = null;
+        hasPendingShot = false;
+        pendingShotTarget = null;
         if (characterMotor != null) characterMotor.ClearFacingDirection();
         if (config != null) SetWeaponRotationX(config.WeaponBaseRotationX);
     }

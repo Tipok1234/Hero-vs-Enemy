@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class PlayerHealth : CharacterHealth
 {
-    private CharacterAnimator characterAnimator;
+    private CharacterAnimator playerAnimator;
     private PlayerMovement playerMovement;
     private PlayerAttack playerAttack;
     private CharacterMotor characterMotor;
@@ -10,8 +10,8 @@ public sealed class PlayerHealth : CharacterHealth
     protected override void Awake()
     {
         base.Awake();
-        characterAnimator = GetComponent<CharacterAnimator>();
-        if (characterAnimator == null) characterAnimator = gameObject.AddComponent<CharacterAnimator>();
+        playerAnimator = GetComponent<CharacterAnimator>();
+        if (playerAnimator == null) playerAnimator = gameObject.AddComponent<CharacterAnimator>();
         playerMovement = GetComponent<PlayerMovement>();
         playerAttack = GetComponent<PlayerAttack>();
         characterMotor = GetComponent<CharacterMotor>();
@@ -35,7 +35,7 @@ public sealed class PlayerHealth : CharacterHealth
 
         if (characterMotor != null) characterMotor.ResetMotion();
         RestoreFullHealth();
-        if (characterAnimator != null) characterAnimator.ResetState();
+        if (playerAnimator != null) playerAnimator.ResetState();
         if (playerMovement != null) playerMovement.SetInputEnabled(false);
         if (playerAttack != null) playerAttack.enabled = false;
     }
@@ -49,17 +49,17 @@ public sealed class PlayerHealth : CharacterHealth
 
     public bool PlaySpawnAnimation()
     {
-        return characterAnimator != null && characterAnimator.PlaySpawn();
+        return playerAnimator != null && playerAnimator.PlaySpawn();
     }
 
     private void Update()
     {
-        if (characterAnimator == null) return;
+        if (playerAnimator == null) return;
 
         if (Input.GetKeyDown(KeyCode.B))
-            characterAnimator.PlayHit();
+            playerAnimator.PlayHit();
 
         if (Input.GetKeyDown(KeyCode.N))
-            characterAnimator.PlayDeath();
+            playerAnimator.PlayDeath();
     }
 }

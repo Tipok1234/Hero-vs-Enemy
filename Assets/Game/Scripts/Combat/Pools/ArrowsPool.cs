@@ -20,7 +20,10 @@ public sealed class ArrowsPool : MonoBehaviour
             ? availableArrows.Dequeue()
             : CreateArrow();
 
+        // A dynamic Rigidbody must not remain under the pool transform while flying.
+        arrow.transform.SetParent(null, true);
         arrow.gameObject.SetActive(true);
+        Debug.Log($"[ArrowDebug] Pool.Get arrow={arrow.GetInstanceID()}, poolPosition={transform.position}, arrowPosition={arrow.transform.position}", arrow);
         return arrow;
     }
 
